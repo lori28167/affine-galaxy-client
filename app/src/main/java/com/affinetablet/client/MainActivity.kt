@@ -237,7 +237,6 @@ private fun AffineWebView(
                 )
                 settings.javaScriptEnabled = true
                 settings.domStorageEnabled = true
-                settings.databaseEnabled = true
                 settings.mediaPlaybackRequiresUserGesture = false
                 settings.cacheMode = android.webkit.WebSettings.LOAD_DEFAULT
                 settings.setSupportZoom(false)

@@ -36,10 +36,10 @@ rejection implementations that don't have privileged access to Samsung's own dig
 
 ## Setup
 
-1. Open this folder in Android Studio (Koala/2024.1+). Let it sync — if it asks to create/upgrade
-   the Gradle wrapper, accept; the wrapper jar isn't checked in.
-2. Run on a Galaxy Tab (S Pen models: Tab S6 and up) via USB debugging, or build an APK via
-   *Build > Generate Signed/Unsigned APK*.
+1. Open this folder in Android Studio (Koala/2024.1+) and let it sync, or build from the command
+   line with `./gradlew assembleDebug` (JDK 17 required). The Gradle wrapper is checked in.
+2. Run on a Galaxy Tab (S Pen models: Tab S6 and up) via USB debugging, or install the APK from
+   a [release](../../releases) built by the CI workflow below.
 3. On first launch, enter your self-hosted AFFiNE server URL (e.g. `https://affine.example.com`,
    or `http://10.x.x.x:3010` if it's only reachable over your WireGuard tunnel/LAN). Cleartext
    http is allowed for exactly this reason — see `app/src/main/res/xml/network_security_config.xml`.
@@ -48,14 +48,23 @@ rejection implementations that don't have privileged access to Samsung's own dig
 The top-right menu lets you reload, toggle a desktop-layout user agent, switch servers, or sign
 out and wipe local WebView storage/cookies.
 
-## What I could not verify here
+## Building a tagged release (CI)
 
-This was written and reasoned through without a local Android SDK/Gradle/JDK available in this
-environment, so it has **not been compiled or run**. Before you rely on it:
+`.github/workflows/build-and-tag.yml` is manual-only (`workflow_dispatch`). Run it from the
+**Actions** tab, or `gh workflow run build-and-tag.yml -f bump=patch` (`bump` is `patch`/`minor`/
+`major`). It:
 
-- Open it in Android Studio and let Gradle sync — that will catch any dependency-version
-  mismatches (AGP 8.7.0 / Kotlin 2.0.20 / Compose BOM 2024.09.03 were current at time of writing
-  but may have moved on).
-- Actually test the palm-rejection behavior on your specific Tab model with your S Pen — the
-  hover-based pre-activation is the part most worth confirming, since hover range/reliability
-  varies by device generation.
+1. Looks at the latest `vX.Y.Z` git tag and bumps it.
+2. Builds a **debug** APK stamped with that version (debug-signed — fine for sideloading onto
+   your own tablet, not for Play Store distribution; there's no release signing config set up).
+3. Pushes the new tag and publishes a GitHub Release with the APK attached.
+
+## What's actually been verified vs. not
+
+This was built without a local Android SDK/JDK, so I bootstrapped one temporarily (JDK 17 +
+Gradle 8.9 + SDK platform 35/build-tools) to actually compile it rather than just eyeballing the
+Kotlin. `./gradlew assembleDebug` builds cleanly and the version-override path the CI workflow
+relies on (`-PappVersionName=... -PappVersionCode=...`) was confirmed against the built APK's
+manifest. What's **not** verified: the app hasn't run on an actual device/emulator, so the UI
+flow and — most importantly — the S Pen hover/palm-rejection behavior in `PalmRejectingWebView`
+still need a real Galaxy Tab to confirm. Hover range/reliability varies by device generation.

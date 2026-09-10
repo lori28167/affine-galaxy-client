@@ -4,6 +4,11 @@ plugins {
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
+// Overridable from CI (see .github/workflows/build-and-tag.yml) so the release tag is the
+// single source of truth for the app version instead of a value hardcoded here.
+val appVersionName = (project.findProperty("appVersionName") as String?) ?: "1.0-dev"
+val appVersionCode = (project.findProperty("appVersionCode") as String?)?.toIntOrNull() ?: 1
+
 android {
     namespace = "com.affinetablet.client"
     compileSdk = 35
@@ -12,8 +17,8 @@ android {
         applicationId = "com.affinetablet.client"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = appVersionCode
+        versionName = appVersionName
     }
 
     buildTypes {
