@@ -1,4 +1,4 @@
-# AFFiNE Tablet Client
+# AFFiNE Galaxy Tab Client
 
 A thin native Android shell around your self-hosted [AFFiNE](https://affine.pro) instance,
 built for Galaxy Tab + S Pen: full-screen webapp, real palm rejection while drawing, and a
