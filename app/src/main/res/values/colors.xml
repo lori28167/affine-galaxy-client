@@ -1,0 +1,5 @@
+<resources>
+    <color name="affine_primary">#1E96EB</color>
+    <color name="affine_bg">#FFFFFF</color>
+    <color name="affine_bg_dark">#141414</color>
+</resources>

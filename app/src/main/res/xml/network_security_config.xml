@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  This app only ever talks to the single self-hosted AFFiNE server URL you enter
+  in Settings. Cleartext (plain http://) is allowed because self-hosted AFFiNE is
+  commonly reached over a private tunnel (e.g. WireGuard) or LAN without public TLS.
+  We do NOT trust extra/self-signed certificate authorities here: if your server
+  uses https with a self-signed cert, either issue it a real cert (e.g. via an
+  internal CA you install as a user trust anchor on the tablet) or serve it over
+  plain http inside the tunnel instead of weakening TLS validation app-wide.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true">
+        <trust-anchors>
+            <certificates src="system" />
+        </trust-anchors>
+    </base-config>
+</network-security-config>

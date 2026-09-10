@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">AFFiNE Tablet</string>
+    <string name="setup_title">Connect to your AFFiNE server</string>
+    <string name="setup_hint">https://affine.example.com</string>
+    <string name="setup_connect">Connect</string>
+    <string name="setup_error_invalid_url">Enter a full URL, e.g. https://affine.example.com</string>
+    <string name="menu_change_server">Change server</string>
+    <string name="menu_desktop_site">Request desktop layout</string>
+    <string name="menu_reload">Reload</string>
+    <string name="menu_clear_data">Sign out and clear data</string>
+</resources>
